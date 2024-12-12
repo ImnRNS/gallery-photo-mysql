@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Image</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Upload Image</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <div class="field">
+                <label class="label">Image Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="name" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Description</label>
+                <div class="control">
+                    <textarea class="textarea" name="description" required></textarea>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Image File</label>
+                <div class="file has-name is-right">
+                    <label class="file-label">
+                      <input class="file-input" type="file" name="file" required>
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">Choose a file…</span>
+                      </span>
+                      <span class="file-name"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="field is-flex column is-3">
+                <div class="control column">
+                    <button type="submit" class="button is-primary">Upload</button>
+                </div>
+                <div class="control column">
+                    <a class="button is-primary is-outlined" href="/gallery">gallery collection</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<script>
+document.querySelector('.file-input').addEventListener('change', function(event) {
+    let fileName = event.target.files[0].name;
+    let nextSibling = event.target.nextElementSibling.nextElementSibling;
+    nextSibling.innerText = fileName;
+});
+
+$('#uploadForm').on('submit', function(event) {
+    event.preventDefault();
+
+    let formData = new FormData(this);
+
+    $.ajax({
+        url: '/upload',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            window.location.href = '/gallery';
+        },
+        error: function(response) {
+            alert('File upload failed. Please try again.');
+        }
+    });
+});
+</script>
+</body>
+</html>

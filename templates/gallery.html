@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Image Gallery</h1>
+        <div class="columns is-multiline">
+            {% for image in images %}
+            <div class="column is-one-quarter">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{{ url_for('static', filename='uploads/' ~ image[2]) }}" alt="{{ image[0] }}">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4">{{ image[0] }}</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            {{ image[1] }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+</section>
+<div class="container flex justify-center is-center">
+    <a class="button is-primary is-outlined" href="/">Back</a>
+</div>
+</body>
+</html>
